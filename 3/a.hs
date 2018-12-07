@@ -19,10 +19,6 @@ areaToCoords (_,(x, y),(w, h)) = (,) <$> xs <*> ys
                                   where xs = [x..(x+w-1)]
                                         ys = [y..(y+h-1)]
 
-isUnique :: Coordinate -> [[Coordinate]]
-
-isUnique :: Area -> [[Coordinate]]
-
 main = do
   content <- readFile "input.txt"
   let l = lines content
