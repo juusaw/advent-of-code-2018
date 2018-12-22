@@ -15,11 +15,11 @@ data Node = Node [Node] [Int] deriving Show
 parseNode :: [Int] -> Int -> ([Node], [Int])
 parseNode [] x = ([], [])
 parseNode a 0 = ([], a)
-parseNode (0:metaCount:rest) 1 = ([Node [] (take metaCount rest)], (drop metaCount rest))
-parseNode (childCount:metaCount:rest) 1 = let (node, newRest) = (parseNode rest childCount)
-                                          in ([Node node (take metaCount newRest)], (drop metaCount newRest))
-parseNode (children:meta:rest) rem = let (node, newRest) = (parseNode (children:meta:rest) 1)
-                                         (moreNodes, trueRest) = (parseNode newRest (rem - 1))
+parseNode (0:metaCount:rest) 1 = ([Node [] $ take metaCount rest], drop metaCount rest)
+parseNode (childCount:metaCount:rest) 1 = let (node, newRest) = parseNode rest childCount
+                                          in ([Node node $ take metaCount newRest], drop metaCount newRest)
+parseNode (children:meta:rest) rem = let (node, newRest) = parseNode (children:meta:rest) 1
+                                         (moreNodes, trueRest) = parseNode newRest (rem - 1)
                                      in (node ++ moreNodes, trueRest)
 
 flattenNode :: [Node] -> [Int]
